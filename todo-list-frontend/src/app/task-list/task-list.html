@@ -1,0 +1,29 @@
+<!-- src/app/task-list/task-list.component.html -->
+<div class="task-list">
+    <h2>Lista de Tareas</h2>
+    <a routerLink="/add" class="add-button">Añadir Tarea</a>
+    @if (tasks.length === 0) {
+    <div class="no-tasks">
+        No hay tareas. ¡Añade una!
+    </div>
+    }
+
+    <ul>
+        @for (task of tasks; track $index) {
+        <li [class.completed]="task.isCompleted">
+            <div class="task-content">
+                <h3>{{ task.title }}</h3>
+                <p>{{ task.description }}</p>
+                <small>Creada: {{ task.createdAt | date:'short' }}</small>
+            </div>
+            <div class="task-actions">
+                <button (click)="toggleTaskCompletion(task)">
+                    {{ task.isCompleted ? 'Deshacer' : 'Completar' }}
+                </button>
+                <button (click)="deleteTask(task.id)">Eliminar</button>
+                <a [routerLink]="['/task', task.id]" class="detail-button">Detalles</a>
+            </div>
+        </li>
+        }
+    </ul>
+</div>
